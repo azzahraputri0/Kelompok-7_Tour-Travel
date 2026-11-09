@@ -1,0 +1,47 @@
+/* The manager PNG supplies the spacing, gradient cards and lime typography. */
+.dashboard-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.manager-dashboard{padding-top:34px;margin-left:-8px;width:calc(100% + 8px)}
+.dashboard-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.manager-metrics{grid-template-columns:1fr 1.47fr 1fr}
+.dashboard-metric{min-width:0;min-height:180px;border-radius:36px;background:linear-gradient(180deg,#358DF9 0%,#1E5494 100%);color:var(--lime);padding:24px 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:18px}
+.dashboard-metric h2{font-size:18px;font-weight:800;line-height:1.35}
+.dashboard-metric strong{font-size:54px;font-weight:900;line-height:1.1;max-width:100%;overflow-wrap:anywhere}
+.dashboard-revenue strong{font-size:30px;white-space:nowrap}
+.dashboard-chart{margin:68px 0 0}
+.dashboard-chart-card{height:494px;border-radius:36px;background:linear-gradient(180deg,#358DF9 0%,#1E5494 100%);display:flex;align-items:center;justify-content:center;padding:38px}
+.dashboard-chart-canvas{width:696px;max-width:100%;height:418px;background:#fff;padding:14px 16px 10px}
+.dashboard-chart-canvas canvas{max-width:100%}
+.dashboard-chart figcaption{font-size:22px;font-weight:800;text-align:center;margin-top:26px;line-height:1.5}
+.staff-dashboard{display:grid;gap:30px}
+.staff-welcome{position:relative;isolation:isolate;min-height:224px;display:flex;align-items:center;overflow:hidden;border-radius:28px;background:#2E3F59;color:#fff;padding:32px}
+.staff-welcome img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.staff-welcome::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,30,49,.86),rgba(15,30,49,.25));z-index:-1}
+.staff-welcome h2{font-size:28px;font-weight:800;line-height:1.4}
+.staff-welcome p{font-size:15px;line-height:1.8;max-width:660px;margin:12px 0 0}
+.staff-actions{display:flex;gap:16px;flex-wrap:wrap;margin-top:24px}
+.staff-actions .btn{height:50px;font-size:14px;padding:0 22px}
+.staff-actions .staff-secondary{background:#fff;color:var(--teks)}
+.staff-dashboard .dashboard-metric h2{font-size:16px}
+@media (min-width:901px) and (max-width:1200px){
+ .dashboard-metric h2{font-size:14px}
+ .dashboard-revenue strong{font-size:clamp(16px,2.1vw,26px)}
+ .dashboard-metric strong{font-size:42px}
+ .dashboard-revenue strong{font-size:clamp(16px,2.1vw,26px)}
+}
+@media (max-width:900px){
+ .manager-dashboard{padding-top:0;margin-left:0;width:100%}
+ .dashboard-metrics,.manager-metrics{grid-template-columns:minmax(0,1fr);gap:16px}
+ .dashboard-metric{min-height:164px;border-radius:28px;padding:24px;gap:14px}
+ .dashboard-metric h2,.staff-dashboard .dashboard-metric h2{font-size:18px}
+ .dashboard-metric strong{font-size:48px}
+ .dashboard-revenue strong{font-size:clamp(20px,6vw,30px);white-space:normal}
+ .dashboard-chart{margin-top:28px}
+ .dashboard-chart-card{height:360px;padding:20px 12px;border-radius:28px}
+ .dashboard-chart-canvas{height:310px;padding:8px}
+ .dashboard-chart figcaption{font-size:18px;margin-top:18px}
+ .staff-welcome{min-height:260px;padding:26px 22px}
+ .staff-welcome h2{font-size:24px;overflow-wrap:anywhere}
+ .staff-welcome p{font-size:13px}
+ .staff-actions{gap:12px}
+ .staff-actions .btn{white-space:normal;text-align:center;min-height:50px;height:auto;padding:12px 18px}
+}

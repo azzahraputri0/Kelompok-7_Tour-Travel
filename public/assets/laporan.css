@@ -1,0 +1,87 @@
+/* Report colors, Unbounded type, spacing and rounded rows follow the supplied Figma frames. */
+.laporan{width:100%;min-width:0}
+.laporan-filter{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) 194px;gap:12px;align-items:end;margin:0 0 32px}
+.laporan-filter .field{display:flex;flex-direction:column;gap:16px;min-width:0}
+.laporan-filter label{font-size:20px;line-height:29px;font-weight:800;white-space:nowrap}
+.laporan-filter .input{width:100%;min-width:0;font-size:18px;padding:0 18px}
+.laporan-filter .btn{width:100%;padding:0 18px;font-size:18px}
+.laporan-scroll{width:100%;overflow-x:auto;overscroll-behavior-x:contain}
+.laporan-tabel{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0 13px;color:var(--teks);font-size:16px;font-weight:700}
+.laporan-tabel col:nth-child(1){width:11%}
+.laporan-tabel col:nth-child(2){width:15%}
+.laporan-tabel col:nth-child(3){width:16%}
+.laporan-tabel col:nth-child(4){width:12%}
+.laporan-tabel col:nth-child(5){width:13%}
+.laporan-tabel col:nth-child(6){width:19%}
+.laporan-tabel col:nth-child(7){width:14%}
+.laporan-tabel th{height:76px;font-size:20px;font-weight:800;text-align:center;line-height:1.25;padding:0 8px;vertical-align:top}
+.laporan-tabel th:first-child,.laporan-tabel th:nth-child(2){text-align:left;padding-left:12px}
+.laporan-tabel td{height:85px;background:var(--lime);padding:12px 10px;text-align:center;vertical-align:middle;overflow-wrap:anywhere;line-height:1.4}
+.laporan-tabel td:first-child{text-align:left;border-radius:14px 0 0 14px;padding-left:12px}
+.laporan-tabel td:nth-child(2){text-align:left}
+.laporan-tabel td:nth-child(6),.laporan-tabel td:last-child{white-space:nowrap}
+.laporan-tabel td:last-child{border-radius:0 14px 14px 0}
+.laporan-total{display:flex;justify-content:center;align-items:center;gap:12px;min-height:68px;width:565px;max-width:100%;margin:4px 0 0 auto;padding:16px 20px;border-radius:14px;background:var(--biru);color:#fff;font-size:18px;font-weight:800;line-height:1.35}
+.laporan-total span:last-child{white-space:nowrap}
+.laporan-aksi{display:flex;justify-content:flex-end;gap:20px;margin:68px 0 0}
+.laporan-aksi .btn{height:62px;font-size:20px;font-weight:800;padding:0 28px;min-width:250px}
+.laporan-manager{width:calc(100% + 12px);margin-left:-12px}
+.laporan-manager .laporan-filter{margin-bottom:35px}
+.laporan-manager .laporan-filter .field{gap:11px}
+.laporan-manager .laporan-filter .input,.laporan-manager .laporan-filter .btn{height:61px}
+.laporan-ringkasan{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:29px;margin:0 5px 28px}
+.laporan-kartu{height:200px;border-radius:44px;background:linear-gradient(180deg,#358DF9 0%,#1E5494 100%);color:var(--lime);text-align:center;padding:26px 18px 22px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;min-width:0}
+.laporan-kartu span{font-size:18px;line-height:1.3;font-weight:800;max-width:270px}
+.laporan-kartu strong{font-size:52px;font-weight:800;line-height:1.2;max-width:100%;overflow-wrap:anywhere}
+.laporan-kartu-uang strong{font-size:30px;line-height:1.3;margin-bottom:10px}
+.laporan-manager .laporan-tabel th{height:65px}
+.laporan-manager .laporan-total{margin-top:0}
+.laporan-manager .laporan-aksi{margin-top:30px}
+.laporan-aksi .laporan-ekspor{background:#fff;color:var(--teks);border:3px solid var(--teks);min-width:224px}
+.laporan .kosong{margin-top:24px}
+@media(max-width:1200px) and (min-width:901px){
+ .laporan-filter{grid-template-columns:repeat(3,minmax(0,1fr)) 150px}
+ .laporan-filter label{font-size:15px}
+ .laporan-filter .input,.laporan-filter .btn{font-size:14px;padding:0 10px}
+ .laporan-tabel{font-size:13px}
+ .laporan-tabel th{font-size:15px}
+ .laporan-kartu span{font-size:14px}
+ .laporan-kartu-uang strong{font-size:23px}
+}
+@media(max-width:900px){
+ .laporan-manager{width:100%;margin-left:0}
+ .laporan-filter{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 14px}
+ .laporan-filter .field{gap:8px}
+ .laporan-filter label{font-size:15px;line-height:1.4;white-space:normal}
+ .laporan-filter .input,.laporan-filter .btn{font-size:15px;padding:0 12px}
+ .laporan-tabel{min-width:1000px}
+ .laporan-total{font-size:15px;flex-wrap:wrap;gap:8px}
+ .laporan-aksi{margin-top:32px;flex-wrap:wrap;gap:12px}
+ .laporan-aksi .btn{min-width:0;font-size:16px;height:54px}
+ .laporan-ringkasan{gap:12px;margin:0 0 24px}
+ .laporan-kartu{height:170px;border-radius:24px;padding:22px 12px}
+ .laporan-kartu span{font-size:13px}
+ .laporan-kartu strong{font-size:36px}
+ .laporan-kartu-uang strong{font-size:20px}
+}
+@media(max-width:540px){
+ .laporan-filter{grid-template-columns:1fr}
+ .laporan-ringkasan{grid-template-columns:1fr}
+ .laporan-kartu{height:160px}
+ .laporan-kartu span{font-size:17px}
+ .laporan-kartu-uang strong{font-size:28px}
+ .laporan-aksi .btn{width:100%}
+}
+/* Data asli lebih panjang dari mock Figma: kecilkan isi baris dan cegah kode/metode/tanggal terpotong ke baris baru */
+@media (min-width:901px){
+  .laporan-tabel td{font-size:14px;padding:10px 8px;height:72px}
+  .laporan-tabel td:nth-child(1),.laporan-tabel td:nth-child(5){white-space:nowrap;overflow-wrap:normal}
+  .laporan-tabel col:nth-child(1){width:15%}
+  .laporan-tabel col:nth-child(2){width:15%}
+  .laporan-tabel col:nth-child(3){width:17%}
+  .laporan-tabel col:nth-child(4){width:9%}
+  .laporan-tabel col:nth-child(5){width:14%}
+  .laporan-tabel col:nth-child(6){width:17%}
+  .laporan-tabel col:nth-child(7){width:13%}
+}
+@media (min-width:901px){.laporan-tabel th{font-size:16px;padding:0 6px}}

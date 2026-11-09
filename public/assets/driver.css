@@ -1,0 +1,76 @@
+/* Driver pages reproduce the supplied Figma frames: Unbounded, blue panels and lime data fields. */
+.driver-dashboard{margin-top:-14px}
+.driver-hero{height:191px;border-radius:20px;padding:48px 40px;color:#fff;background:linear-gradient(110deg,#173d64 0%,#3286ec 60%,#75b7d5 100%)}
+.driver-hero h1{font-size:36px;font-weight:800;line-height:1.3}
+.driver-hero p{margin:12px 0 0;font-size:17px;font-weight:700}
+.driver-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;margin-top:22px}
+.driver-kpis section{height:165px;border-radius:24px;background:linear-gradient(180deg,#3286ec,#2769ba);color:var(--lime);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.driver-kpis strong{font-size:60px;font-weight:800;line-height:1.1}
+.driver-kpis h2{font-size:18px;font-weight:700;text-align:center;line-height:1.35;margin-top:8px}
+.driver-blue{background:var(--biru);border-radius:22px;color:#fff;min-width:0}
+.driver-dashboard-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:38px;margin-top:35px}
+.driver-dashboard-grid>.driver-blue{height:358px;padding:28px}
+.driver-dashboard-grid h2{font-size:22px;font-weight:700;white-space:nowrap}
+.driver-rekap header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.driver-month{display:block;white-space:nowrap;border-radius:30px;background:#e8edf2;color:var(--teks);padding:9px 12px;font-size:9px;font-weight:700}
+.driver-chart-layout{display:flex;align-items:center;gap:24px;margin-top:28px}
+.driver-chart-tile{height:212px;flex:0 0 218px;background:white;display:grid;place-items:center}
+.driver-donut{width:170px;height:170px;border-radius:50%;background:conic-gradient(var(--biru) var(--progress),#e2e8f0 0);display:grid;place-items:center}
+.driver-donut>div{width:124px;height:124px;background:white;color:var(--teks);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.driver-donut strong{font-size:28px;font-weight:800}
+.driver-donut span{font-size:12px;font-weight:600}
+.driver-legend{margin:0;display:grid;gap:28px}
+.driver-legend>div{position:relative;padding-left:24px}
+.driver-legend>div:before{content:'';position:absolute;left:0;top:5px;width:13px;height:13px;border:2px solid #135dc0}
+.driver-legend>div+div:before{background:#b7d5fc;border:0}
+.driver-legend dt{font-size:15px;font-weight:700}
+.driver-legend dd{font-size:10px;margin:4px 0 0}
+.driver-upcoming-list{display:grid;gap:14px;margin-top:28px}
+.driver-trip{display:flex;align-items:center;gap:12px;min-height:75px;background:var(--lime);border-radius:12px;color:var(--teks);padding:9px;text-decoration:none}
+.driver-date{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--biru);color:#fff;flex:0 0 60px;height:57px;border-radius:8px}
+.driver-date b{font-size:21px;line-height:1.25}
+.driver-date span{font-size:8px}
+.driver-trip-name{min-width:0;flex:1}
+.driver-trip-name b{display:block;font-size:13px;line-height:1.35;overflow-wrap:anywhere}
+.driver-trip-name small{display:block;font-size:8px;margin-top:5px}
+.driver-status{background:var(--biru);color:#fff;border-radius:30px;padding:10px 9px;font-size:8px;font-weight:700}
+.driver-notice{margin-top:38px;height:131px;border-radius:16px;padding:27px 32px;background:linear-gradient(180deg,#3286ec,#2769ba);color:var(--lime)}
+.driver-notice h2{font-size:29px;font-weight:800}
+.driver-notice p{font-size:12px;font-weight:600;margin:13px 0 0;line-height:1.6}
+.driver-schedule{margin-top:130px}
+.driver-table-head,.driver-table-row{display:grid;grid-template-columns:1fr 1.45fr 1.2fr 1.45fr .8fr;align-items:center;gap:15px;padding:0 26px}
+.driver-table-head{min-height:45px;font-weight:700;font-size:18px;margin-bottom:14px}
+.driver-table-row{background:var(--lime);border-radius:14px;min-height:85px;margin-bottom:27px;font-size:16px;font-weight:700}
+.driver-table-row>span{min-width:0;overflow-wrap:anywhere}
+.driver-table-head>span:last-child{text-align:center}
+.driver-detail-link{display:flex;align-items:center;justify-content:center;min-height:44px;background:var(--biru);color:var(--lime);border-radius:12px;text-decoration:none;font-size:16px;padding:8px 16px}
+.driver-detail{margin-top:-12px}
+.driver-back{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:188px;padding:8px 24px;border:3px solid var(--teks);border-radius:18px;text-decoration:none;font-weight:700;font-size:18px;margin-bottom:38px}
+.driver-detail .judul-hal{margin-bottom:28px}
+.driver-detail-grid{display:grid;grid-template-columns:.85fr 1fr;gap:29px 25px}
+.driver-detail-grid>.driver-blue{padding:24px 32px}
+.driver-detail-grid h2{font-size:22px;color:var(--lime);font-weight:800;margin-bottom:18px}
+.driver-detail-grid dl{margin:0;min-width:0}
+.driver-detail-grid dt{font-size:11px;font-weight:500;margin-bottom:7px}
+.driver-detail-grid dd{background:var(--lime);color:var(--teks);border-radius:10px;margin:0 0 14px;min-height:35px;display:flex;align-items:center;padding:7px 14px;font-size:13px;font-weight:700;overflow-wrap:anywhere}
+.driver-detail-grid dd:last-child{margin-bottom:0}
+.driver-summary,.driver-person{min-height:213px}
+.driver-summary{display:flex;align-items:center;justify-content:flex-end}
+.driver-summary-content{width:63%;min-width:0}
+.driver-summary h2{font-size:26px;margin-bottom:10px}
+.driver-summary p{font-size:12px;margin:8px 0;font-weight:500}
+.driver-location{display:flex;align-items:center;gap:5px}
+.driver-location svg{flex:none;width:14px;height:18px}
+.driver-summary-status{display:inline-flex;min-height:34px;align-items:center;background:var(--lime);color:var(--teks);border-radius:9px;padding:6px 15px;font-size:12px;font-weight:700;margin-top:8px}
+.driver-person,.driver-vehicle{display:flex;align-items:center;gap:25px}
+.driver-fields{flex:1;min-width:0}
+.driver-avatar{display:grid;place-items:center;flex:0 0 140px;height:140px;border-radius:50%;background:var(--biru-muda);color:var(--teks);font-size:60px;font-weight:700}
+.driver-customer,.driver-vehicle{min-height:279px}
+.driver-customer h2{margin-bottom:20px}
+.driver-vehicle-placeholder{flex:0 0 190px;min-height:150px;border-radius:15px;background:var(--biru-muda);color:var(--teks);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px}
+.driver-vehicle-placeholder svg{width:150px;max-width:100%}
+.driver-vehicle-placeholder small{font-size:8px}
+.driver-journey{grid-column:1/-1;min-height:240px}
+.driver-journey-grid{display:grid;grid-template-columns:1fr 1.45fr;gap:28px}
+@media(min-width:901px) and (max-width:1250px){.driver-dashboard-grid{gap:20px;grid-template-columns:1fr}.driver-dashboard-grid>.driver-blue{height:auto;min-height:300px}.driver-detail-grid{grid-template-columns:1fr}.driver-journey{grid-column:auto}.driver-table-head,.driver-table-row{font-size:12px;padding:12px;gap:10px}.driver-avatar{flex-basis:110px;height:110px}.driver-hero h1{font-size:28px}}
+@media(max-width:900px){.driver-dashboard,.driver-detail{margin-top:0}.driver-hero{height:auto;min-height:180px;padding:30px 22px}.driver-hero h1{font-size:26px;overflow-wrap:anywhere}.driver-hero p{font-size:12px}.driver-kpis,.driver-dashboard-grid,.driver-detail-grid{grid-template-columns:1fr;gap:20px}.driver-kpis section{height:150px}.driver-dashboard-grid>.driver-blue{height:auto;min-height:310px;padding:22px 16px}.driver-dashboard-grid h2{font-size:17px;white-space:normal}.driver-rekap header{flex-wrap:wrap}.driver-chart-layout{gap:15px;justify-content:center;flex-wrap:wrap}.driver-chart-tile{flex-basis:190px;height:190px}.driver-legend{gap:18px}.driver-notice{height:auto;padding:25px 22px;margin-top:20px}.driver-notice h2{font-size:23px}.driver-notice p{font-size:11px}.driver-schedule{margin-top:30px}.driver-table-head{display:none}.driver-table-row{display:flex;flex-direction:column;align-items:stretch;padding:20px;gap:15px;font-size:13px;margin-bottom:20px}.driver-table-row>span[data-label]:before{content:attr(data-label);display:block;font-size:10px;font-weight:500;margin-bottom:5px}.driver-detail-grid>.driver-blue{padding:24px 20px}.driver-detail-grid h2{font-size:20px}.driver-summary-content{width:100%}.driver-summary,.driver-person{min-height:210px}.driver-person,.driver-vehicle{flex-wrap:wrap;gap:20px}.driver-avatar{flex-basis:100px;height:100px;font-size:40px}.driver-fields{min-width:160px}.driver-vehicle-placeholder{flex-basis:140px;min-height:120px}.driver-journey{grid-column:auto}.driver-journey-grid{grid-template-columns:1fr;gap:14px}.driver-back{font-size:15px;min-width:150px;margin-bottom:22px}.driver-trip-name b{font-size:12px}.driver-status{font-size:7px}.driver-date{flex-basis:52px}.driver-trip{gap:8px}.driver-detail-grid dd{font-size:12px}}
