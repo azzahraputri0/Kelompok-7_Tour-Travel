@@ -50,22 +50,29 @@ Password semua akun demonstrasi: `password123`.
 1. Pelanggan memilih paket dan jadwal yang tersedia.
 2. Isi jumlah peserta, kontak pemesan, dan data penumpang. Total dihitung di server dari harga paket dan biaya admin.
 3. Setelah pesanan dibuat, kuota ditahan dengan tenggat pembayaran 24 jam. Status awal: **Belum Terbayar**.
-4. Buka pembayaran, periksa rincian transfer, lalu unggah bukti JPG/PNG/PDF, maksimal 4 MB.
+4. Buka pembayaran QRIS manual, pindai QRIS resmi menggunakan aplikasi pembayaran sendiri, periksa nama merchant dan masukkan total pesanan tepat bila QR statis. Unggah bukti JPG/PNG/PDF, maksimal 4 MB. Jika QRIS belum tersedia, jangan membayar; unggahan hanya untuk uji DEMO.
 5. Status berubah menjadi **Menunggu Verifikasi**. Ini belum berarti pembayaran berhasil.
-6. Staff memeriksa data pemesanan dan bukti transfer. Persetujuan menjadikan pembayaran **Lunas** dan pemesanan **Terkonfirmasi** dalam satu proses; tidak ada konfirmasi ganda yang wajib dilakukan pelanggan.
+6. Staff mencocokkan data pesanan, bukti QRIS, dan dana yang benar-benar diterima pada akun merchant. Persetujuan menjadikan pembayaran **Lunas** dan pemesanan **Terkonfirmasi** dalam satu proses; tidak ada konfirmasi ganda yang wajib dilakukan pelanggan.
 7. Jika bukti ditolak, alasan ditampilkan dan pelanggan dapat mengirim ulang sebelum tenggat. Penolakan pesanan oleh staff membutuhkan alasan.
 8. Staff menugaskan driver dan kendaraan pada pesanan terkonfirmasi. Sistem memeriksa kapasitas dan bentrok jadwal. Driver melihat jadwal miliknya sendiri.
 
-Tautan grup WhatsApp opsional dan tidak menjadi syarat pembayaran sah. Sistem tidak mengirim pesan WhatsApp otomatis. Tidak ada QR pembayaran aktif, payment gateway, atau e-ticket tambahan di luar lingkup use case.
+Tautan grup WhatsApp opsional dan tidak menjadi syarat pembayaran sah. Sistem tidak mengirim pesan WhatsApp otomatis. Tidak ada payment gateway, QR dinamis, validasi otomatis penerimaan dana, atau e-ticket tambahan.
 
-### Rekening tujuan
-Isi hanya rekening resmi yang sudah dikonfirmasi pada `.env`:
-```dotenv
-TRAVEL_BANK_NAME=
-TRAVEL_BANK_ACCOUNT=
-TRAVEL_BANK_HOLDER=
+### QRIS resmi pengelola (opsional)
+Default `TRAVEL_QRIS_IMAGE=` kosong: halaman memperingatkan **DEMO — Jangan melakukan pembayaran**, tanpa QR/barcode buatan. Unggahan bukti uji tetap tersedia dan berstatus Proses Verifikasi, bukan pelunasan nyata.
+
+Untuk menerima pembayaran manual, pengelola harus memperoleh QRIS resmi dari penyedia merchant, memeriksa nama merchant serta menguji penerimaan dana sendiri. Simpan gambar PNG/JPG/WebP resmi sebagai `storage/app/public/payments/qris.png`, lalu jalankan:
+```sh
+php artisan storage:link
+php artisan config:clear
 ```
-Jika kosong, halaman menampilkan peringatan **DEMO — jangan melakukan transfer**. Tidak ada nomor rekening karangan. Setelah mengubah konfigurasi, jalankan `php artisan config:clear`.
+Atur `.env`:
+```dotenv
+TRAVEL_QRIS_IMAGE=/storage/payments/qris.png
+```
+Alternatif: simpan di `public/payments/qris.png` dan gunakan `/payments/qris.png`. Hanya path aset publik lokal yang diterima (huruf, angka, `_`, `-`, dan pemisah `/`); URL eksternal, traversal, SVG, dan file yang hilang/tidak valid ditolak menjadi mode DEMO. Tidak ada aset QR resmi yang disertakan. Jangan menggunakan gambar contoh sebagai tujuan pembayaran. Setelah setiap perubahan konfigurasi, jalankan `php artisan config:clear`.
+
+QR statis tidak mengisi nominal otomatis: pelanggan harus memasukkan total tepat pada aplikasi pembayarannya. Staff wajib memeriksa dana masuk di akun merchant sebelum menyetujui; unggahan dan label QRIS sendiri bukan bukti settlement. Jangan menyetujui bukti DEMO sebagai dana nyata. Konfigurasi bank lama dipertahankan untuk kompatibilitas, tetapi bukan tujuan pembayaran baru.
 
 ### Tenggat pesanan
 Pesanan belum dibayar yang melewati tenggat akan kedaluwarsa dan kuotanya tersedia kembali. Pemeriksaan juga dijalankan ketika daftar/detail pesanan diakses. Untuk aplikasi yang berjalan terus-menerus, aktifkan Laravel scheduler (`php artisan schedule:work` untuk lokal, atau cron `schedule:run` di server). Bukti yang sedang ditinjau tidak dianggap sebagai belum dibayar.
@@ -90,6 +97,7 @@ Saat pertama dibuka, laporan menampilkan hari transaksi paling terakhir (hari in
 Bukti pembayaran dan unggahan identitas disimpan di private storage, bukan URL publik. Pemilik berkas dan role pemeriksa divalidasi sebelum file diberikan. Jangan mengubah storage private menjadi public atau membagikan `.env`, log aplikasi, database nyata, atau dokumen identitas pelanggan.
 
 ## Pengujian
+Tes isi PDF membutuhkan `pdftotext` (Poppler; Ubuntu/Debian: `sudo apt install poppler-utils`). Ini hanya dependensi pengujian, bukan runtime aplikasi.
 ```sh
 php artisan test
 php artisan route:list --except-vendor
@@ -99,4 +107,4 @@ Tes otomatis default memakai SQLite in-memory dari `phpunit.xml`, terpisah dari 
 ## Revisi tampilan dan migrasi foto/metode
 Jalankan `php artisan migrate` setelah pembaruan maupun import SQL demo, lalu `php artisan storage:link`. Migration `000004_add_vehicle_photo` dan `000005_add_driver_photo_and_payment_method` menambah foto kendaraan/driver dan metode pembayaran tanpa mengganti transaksi historis. Foto driver/kendaraan bersifat publik; jangan unggah identitas pribadi ke kolom foto ini.
 
-Seeder baru memakai label QRIS untuk data demonstrasi laporan. Data historis tetap Transfer Bank; PDF/Excel mengikuti metode tersimpan. Tidak ada QR buatan, pemindai, atau payment gateway. Alur pembayaran baru tetap transfer manual sesuai konfigurasi rekening yang ada; **QRIS manual belum diaktifkan**. Label QRIS pada data demo bukan kesiapan menerima pembayaran QRIS. Untuk mengaktifkannya dibutuhkan aset QRIS resmi pengelola dan konfigurasi/alur terverifikasi tersendiri, di luar revisi laporan ini.
+Seeder memakai QRIS untuk data demonstrasi laporan. Bukti baru atau kirim ulang sekarang mencatat metode QRIS dan menunggu verifikasi manual; transaksi historis yang tidak disentuh tetap menggunakan metode tersimpan (default lama Transfer Bank). Laporan, PDF, dan Excel mengikuti kolom metode tersimpan, bukan label QRIS seragam. Label pada data demo bukan bukti dana masuk atau kesiapan merchant.
