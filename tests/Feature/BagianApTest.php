@@ -39,10 +39,13 @@ class BagianApTest extends TestCase
         }
     }
 
-    public function test_login_gagal_dan_customer_ditolak(): void
+    public function test_login_gagal_dan_customer_diterima_tanpa_akses_ap(): void
     {
         $this->post('/login', ['email' => 'staff@traveltour.test', 'password' => 'salah'])->assertSessionHasErrors(['email' => 'Email atau password salah']);
-        $this->post('/login', ['email' => 'siti.rahmawati@mail.test', 'password' => 'password123'])->assertSessionHasErrors('email');
+        // UC02 now includes Customer; AP authorization remains unchanged.
+        $this->post('/login', ['email' => 'siti.rahmawati@mail.test', 'password' => 'password123'])->assertRedirect('/customer/dashboard');
+        $this->get('/staff/laporan')->assertForbidden();
+        $this->post('/logout');
         $this->assertGuest();
         $this->get('/login')->assertOk()->assertSee('Akun Demo');
     }

@@ -1,5 +1,5 @@
 @php
-    $user = auth()->user();
+    $user = auth()->user() ?? (object) ['role' => 'Guest'];
     $ikon = [
         'dashboard' => '<path d="M4 4h7v7H4zm9 0h7v7h-7zM4 13h7v7H4zm9 0h7v7h-7z" fill="currentColor" rx="2"/>',
         'jadwal' => '<path d="M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm-2 8h14v10H5zm2 2v2h4v-2zm6 0v2h4v-2zm-6 4v2h4v-2z" fill="currentColor"/>',
@@ -8,8 +8,20 @@
         'pemesanan' => '<path d="M12 2a6 6 0 0 0-6 6v4l-2 4h16l-2-4V8a6 6 0 0 0-6-6m-2 16a2 2 0 0 0 4 0z" fill="currentColor"/>',
         'pembayaran' => '<path d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 1-2m3 5v2h10V8zm0 4v2h7v-2z" fill="currentColor"/>',
     ];
-    // [route, label, ikon, pola aktif]. route null = modul milik anggota tim lain (tampil sesuai Figma, tanpa tautan).
     $menu = match ($user->role) {
+        'Admin' => [
+            ['admin.dashboard', 'Dashboard', 'dashboard', 'admin.dashboard'],
+            ['admin.paket.index', 'Data Master', 'pelanggan', 'admin.paket.*,admin.driver.*,admin.kendaraan.*'],
+        ],
+        'Customer' => [
+            ['katalog.index', 'Paket Travel', 'jadwal', 'katalog.*,customer.pesanan.create,customer.pesanan.penumpang,customer.pesanan.store'],
+            ['customer.pesanan.index', 'Pesanan Saya', 'pemesanan', 'customer.pesanan.index,customer.pesanan.detail,customer.pembayaran.*'],
+        ],
+        'Guest' => [
+            ['katalog.index', 'Paket Travel', 'jadwal', 'katalog.*'],
+            ['login', 'Masuk', 'pelanggan', 'login'],
+            ['register', 'Daftar', 'pelanggan', 'register'],
+        ],
         'Driver' => [
             ['driver.dashboard', 'Dashboard', 'dashboard', 'driver.dashboard'],
             ['driver.jadwal', 'Jadwal Tour', 'jadwal', 'driver.jadwal*'],
@@ -21,8 +33,9 @@
         default => [
             ['staff.dashboard', 'Dashboard', 'dashboard', 'staff.dashboard'],
             ['pelanggan.index', 'Pelanggan', 'pelanggan', 'pelanggan.*'],
-            [null, 'Pemesanan', 'pemesanan', ''],
-            [null, 'Pembayaran', 'pembayaran', ''],
+            ['staff.pemesanan.index', 'Pemesanan', 'pemesanan', 'staff.pemesanan.*'],
+            ['staff.pembayaran.index', 'Pembayaran', 'pembayaran', 'staff.pembayaran.*'],
+            ['staff.penugasan.index', 'Penugasan', 'jadwal', 'staff.penugasan.*'],
             ['staff.laporan', 'Laporan', 'laporan', 'staff.laporan*'],
         ],
     };
@@ -37,16 +50,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? 'Travel Tour' }} · Travel Tour</title>
     <link rel="stylesheet" href="{{ asset('assets/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/travel.css') }}">
     @stack('head')
 </head>
 <body>
 <div class="app" id="app">
     <aside class="sidebar" id="sidebar" aria-label="Menu utama">
-        <a class="brand" href="{{ route(strtolower($user->role).'.dashboard') }}">Travel<span>Tour</span></a>
+        <a class="brand" href="{{ ($user->role === 'Guest' ? route('katalog.index') : route(strtolower($user->role).'.dashboard')) }}">Travel<span>Tour</span></a>
         <nav class="menu">
             @foreach ($menu as [$route, $label, $icon, $pola])
                 @if ($route)
-                    <a href="{{ route($route) }}" class="{{ request()->routeIs($pola) ? 'aktif' : '' }}" @if (request()->routeIs($pola)) aria-current="page" @endif>
+                    <a href="{{ route($route) }}" class="{{ request()->routeIs(...explode(',', $pola)) ? 'aktif' : '' }}" @if (request()->routeIs(...explode(',', $pola))) aria-current="page" @endif>
                         <svg viewBox="0 0 24 24" aria-hidden="true">{!! $ikon[$icon] !!}</svg>{{ $label }}
                     </a>
                 @else
@@ -58,10 +72,12 @@
         </nav>
         <hr class="garis-menu">
         <div class="peran">{{ $user->role }}</div>
+        @auth
         <form class="keluar-form" method="post" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="keluar">Keluar</button>
         </form>
+        @endauth
     </aside>
 
     <main class="konten">
@@ -110,6 +126,7 @@
         }
     })();
 </script>
+<script src="{{ asset('assets/travel.js') }}"></script>
 @stack('scripts')
 </body>
 </html>

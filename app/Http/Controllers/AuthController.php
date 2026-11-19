@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 // Login sederhana untuk masuk sesuai role (Staff, Manager, Driver).
 class AuthController extends Controller
 {
-    public const ROLE_DIIZINKAN = ['Staff', 'Manager', 'Driver'];
+    public const ROLE_DIIZINKAN = ['Staff', 'Manager', 'Driver', 'Customer', 'Admin'];
 
     public function form()
     {

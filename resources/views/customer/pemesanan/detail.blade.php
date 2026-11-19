@@ -1,0 +1,4 @@
+@extends('layouts.app',['title'=>'Detail Pemesanan'])
+@section('content')<a class="btn" href="{{ route('customer.pesanan.index') }}">Kembali</a>@include('partials.order-detail')
+@if($detailPemesanan->status==='Belum Terbayar')<div class="travel-actions"><a class="btn" href="{{ route('customer.pembayaran.create',$detailPemesanan->id_pemesanan) }}">Bayar / Upload Bukti</a></div>@endif
+@if($detailPemesanan->status==='Terkonfirmasi' && ($detailPemesanan->link_grup_wa ?? null))<div class="travel-actions"><a class="btn" target="_blank" rel="noopener" href="{{ $detailPemesanan->link_grup_wa }}">Grup Perjalanan WhatsApp</a></div>@endif @endsection

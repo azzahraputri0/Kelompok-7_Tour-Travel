@@ -8,6 +8,9 @@
     $p = $detailPelanggan;
     $dokumen = $p->dokumen_identitas;
     $gambar = $dokumen && preg_match('/\.(jpe?g|png|webp|svg)$/i', $dokumen);
+    $urlDokumen = $dokumen && str_starts_with($dokumen, 'identitas/')
+        ? route('berkas.identitas', $p->id_pengguna)
+        : ($dokumen === 'uploads/identitas/ktp-contoh.svg' ? asset($dokumen) : null);
 @endphp
 
 @section('content')
@@ -30,10 +33,10 @@
                 <div><dt>Status Data</dt><dd><span class="pelanggan-status {{ $p->status_data === 'Terverifikasi' ? 'verified' : 'incomplete' }}">{{ $p->status_data }}</span></dd></div>
             </dl>
             <h3>Dokumen Identitas</h3>
-            @if ($gambar)
-                <a href="{{ asset($dokumen) }}" target="_blank" rel="noopener"><img class="pelanggan-document" src="{{ asset($dokumen) }}" alt="Dokumen identitas {{ $p->nama_lengkap }}"></a>
-            @elseif ($dokumen)
-                <a class="btn" href="{{ asset($dokumen) }}" target="_blank" rel="noopener">Lihat dokumen</a>
+            @if ($gambar && $urlDokumen)
+                <a href="{{ $urlDokumen }}" target="_blank" rel="noopener"><img class="pelanggan-document" src="{{ $urlDokumen }}" alt="Dokumen identitas {{ $p->nama_lengkap }}"></a>
+            @elseif ($urlDokumen)
+                <a class="btn" href="{{ $urlDokumen }}" target="_blank" rel="noopener">Lihat dokumen</a>
             @else
                 <div class="kosong">Dokumen identitas belum diunggah.</div>
             @endif

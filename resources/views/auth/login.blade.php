@@ -13,7 +13,7 @@
         <div class="brand" style="margin:0">Travel<span>Tour</span></div>
         <div>
             <h2>Kelola jadwal, pelanggan, dan laporan perjalanan dalam satu tempat.</h2>
-            <p>Masuk sesuai peran Anda: Staff, Manager, atau Driver.</p>
+            <p>Masuk untuk memesan perjalanan atau mengelola layanan Travel Tour.</p>
         </div>
         <small style="opacity:.75">© {{ date('Y') }} Travel Tour</small>
     </section>
@@ -25,6 +25,10 @@
                 <h1>Masuk</h1>
                 <p style="margin:4px 0 0;color:var(--teks-2)">Gunakan email dan password akun Anda.</p>
             </div>
+
+            @if (session('success'))
+                <div class="alert" role="status" style="margin:0;background:#e3ff3b;color:#252944">{{ session('success') }}</div>
+            @endif
 
             @if ($errors->any())
                 <div class="alert gagal" role="alert" style="margin:0">{{ $errors->first() }}</div>
@@ -39,6 +43,7 @@
                 <input class="input" id="password" name="password" type="password" autocomplete="current-password" required>
             </div>
             <button type="submit" class="btn">Masuk</button>
+            <p>Belum punya akun? <a href="{{ route('register') }}">Daftar</a></p><a href="{{ route('katalog.index') }}">Lihat Paket Travel</a>
 
             @unless (app()->environment('production'))
                 <div class="demo">

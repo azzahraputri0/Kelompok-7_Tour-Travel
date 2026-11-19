@@ -1,0 +1,4 @@
+@extends('layouts.app',['title'=>'Detail Pemesanan'])
+@section('content')<a class="btn" href="{{ route('staff.pemesanan.index') }}">Kembali</a>@include('partials.order-detail')
+@if($detailPemesanan->pembayaran)<div class="travel-actions"><a class="btn" href="{{ route('staff.pembayaran.detail',$detailPemesanan->pembayaran->id_pembayaran) }}">Periksa Pembayaran</a></div>@endif
+@if(!in_array($detailPemesanan->status,['Terkonfirmasi','Ditolak','Dibatalkan']))<form class="travel-panel" method="post" action="{{ route('staff.pemesanan.tolak',$detailPemesanan->id_pemesanan) }}">@csrf<div class="travel-field"><label for="alasan">Alasan Penolakan Pemesanan</label><textarea class="input" id="alasan" name="alasan" required maxlength="1000"></textarea></div><div class="travel-actions"><button class="btn danger">Tolak Pemesanan</button></div></form>@endif @endsection

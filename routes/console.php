@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
+use App\Entities\Pemesanan_Entity;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schedule;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+Artisan::command('travel:expire-bookings', function () {
+    $this->info('Expired: '.app(Pemesanan_Entity::class)->expire());
+});
+Schedule::command('travel:expire-bookings')->everyMinute()->withoutOverlapping();

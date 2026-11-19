@@ -16,7 +16,7 @@
                     <span role="cell" data-label="Kode">{{ $j->kode_pemesanan }}</span>
                     <span role="cell" data-label="Paket Travel">{{ $j->nama_paket }}</span>
                     <span role="cell" data-label="Tujuan">{{ $j->tujuan }}</span>
-                    <span role="cell" data-label="Berangkat">{{ \Illuminate\Support\Carbon::parse($j->tanggal_berangkat)->translatedFormat('j M Y') }}</span>
+                    <span role="cell" data-label="Berangkat">{{ \Illuminate\Support\Carbon::parse($j->tanggal_berangkat)->format('d/m/Y') }}</span>
                     <span role="cell"><a class="driver-detail-link" href="{{ route('driver.jadwal.detail', $j->id_jadwal) }}" aria-label="Detail {{ $j->nama_paket }}">Detail</a></span>
                 </div>
             @endforeach

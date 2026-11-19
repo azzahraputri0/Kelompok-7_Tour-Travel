@@ -1,0 +1,4 @@
+@extends('layouts.app',['title'=>'Pesanan Saya'])
+@section('content')
+<a class="btn" href="{{ route('katalog.index') }}">Cari Paket Travel</a>
+<div class="travel-table-wrap"><table class="travel-table"><thead><tr><th>Kode Pemesanan</th><th>Paket Travel</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr></thead><tbody>@forelse($daftarPemesanan as $item)<tr><td>{{ $item->kode_pemesanan }}</td><td>{{ $item->nama_paket }}</td><td>{{ \Carbon\Carbon::parse($item->jadwal_keberangkatan)->format('d/m/Y') }}</td><td><span class="travel-status status-{{ \Illuminate\Support\Str::slug($item->status) }}">{{ $item->status }}</span></td><td><a class="btn" href="{{ route('customer.pesanan.detail',$item->id_pemesanan) }}">Detail</a></td></tr>@empty<tr><td colspan="5">Belum ada pemesanan.</td></tr>@endforelse</tbody></table></div>@endsection
