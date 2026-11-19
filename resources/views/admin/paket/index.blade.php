@@ -1,0 +1,4 @@
+@extends('layouts.app',['title'=>'Data Master'])
+@section('content')
+@include('admin.partials.list', ['resource'=>'paket','items'=>$daftarPaket])
+@endsection

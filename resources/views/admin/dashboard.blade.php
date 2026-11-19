@@ -1,0 +1,2 @@
+@extends('layouts.app',['title'=>'Dashboard'])
+@section('content')<div class="travel-grid">@foreach(['paket'=>['Paket Travel',$totalPaket],'driver'=>['Driver',$totalDriver],'kendaraan'=>['Kendaraan',$totalKendaraan]] as $key=>[$label,$count])<a class="travel-stat" href="{{ route('admin.'.$key.'.index') }}">{{ $label }}<strong>{{ $count }}</strong></a>@endforeach</div>@endsection

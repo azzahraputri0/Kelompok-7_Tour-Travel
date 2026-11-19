@@ -19,7 +19,7 @@ class Laporan_Entity
             ->join('UMUM as u', 'u.id_pengguna', '=', 'p.FK_id_pengguna')
             ->join('PAKET_TRAVEL as k', 'k.id_paket', '=', 'p.FK_id_paket')
             ->select([
-                'b.id_pembayaran', 'b.nomor_invoice', 'b.tanggal_bayar', 'b.nominal', 'b.status as status_pembayaran',
+                'b.id_pembayaran', 'b.nomor_invoice', 'b.tanggal_bayar', 'b.nominal', 'b.status as status_pembayaran', 'b.metode_pembayaran',
                 'p.kode_pemesanan', 'p.jumlah_peserta', 'u.nama_lengkap as nama_customer', 'k.nama_paket', 'k.tujuan',
             ])
             ->orderBy('b.tanggal_bayar')

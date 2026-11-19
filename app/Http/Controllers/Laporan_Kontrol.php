@@ -44,7 +44,7 @@ class Laporan_Kontrol extends Controller
         ]);
     }
 
-    // PC-31 (Staff), PC-42 (Manager): tampilkan halaman laporan dengan periode default bulan ini.
+    // PC-31 (Staff), PC-42 (Manager): default ke tanggal transaksi terakhir.
     public function getAll_transaksi(Request $request)
     {
         if ($request->has('periode_awal')) {
@@ -54,14 +54,19 @@ class Laporan_Kontrol extends Controller
         // CALL Laporan_Entity.getAll_data_transaksi()
         $daftarTransaksi = $this->laporanEntity->getAll_data_transaksi();
 
+        $tanggal = $daftarTransaksi->max('tanggal_bayar') ?? Carbon::today()->toDateString();
+        $daftarTransaksi = $this->laporanEntity->get_data_transaksi('Harian', $tanggal, $tanggal);
+
         // CALL J1/Q1_Halaman_laporan.tampilkan_halaman_laporan()
         return view($this->halaman($request), [
             'periode' => [
-                'jenis' => 'Bulanan',
-                'periode_awal' => Carbon::today()->startOfMonth()->toDateString(),
-                'periode_akhir' => Carbon::today()->toDateString(),
+                'jenis' => 'Harian',
+                'periode_awal' => $tanggal,
+                'periode_akhir' => $tanggal,
             ],
-            'daftarTransaksi' => null,
+            'daftarTransaksi' => $daftarTransaksi,
+            'ringkasan' => Laporan_Entity::ringkasan($daftarTransaksi),
+            'pesan' => $daftarTransaksi->isEmpty() ? 'Laporan Transaksi Tidak tersedia' : null,
             'jumlahSeluruhTransaksi' => $daftarTransaksi->count(),
         ]);
     }
@@ -160,7 +165,7 @@ class Laporan_Kontrol extends Controller
 
         $baris = 6;
         foreach ($daftarTransaksi as $t) {
-            $sheet->fromArray([tanggal($t->tanggal_bayar), $t->kode_pemesanan, $t->nama_customer, $t->nama_paket, (int) $t->jumlah_peserta, 'Transfer Bank', (float) $t->nominal, $t->status_pembayaran], null, 'A'.$baris++);
+            $sheet->fromArray([tanggal($t->tanggal_bayar), $t->kode_pemesanan, $t->nama_customer, $t->nama_paket, (int) $t->jumlah_peserta, $t->metode_pembayaran ?? 'Transfer Bank', (float) $t->nominal, $t->status_pembayaran], null, 'A'.$baris++);
         }
         $sheet->getStyle('G6:G'.$baris)->getNumberFormat()->setFormatCode('"Rp "#,##0');
         $sheet->getStyle('A1')->getFont()->setBold(true)->setSize(14);

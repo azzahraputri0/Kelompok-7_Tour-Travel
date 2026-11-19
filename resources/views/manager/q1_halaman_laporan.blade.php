@@ -33,7 +33,7 @@
                                     <td>{{ $t->jumlah_peserta }}</td>
                                     <td>{{ $t->metode_pembayaran ?? 'Transfer Bank' }}</td>
                                     <td>Rp. {{ number_format($t->nominal, 0, ',', '.') }}</td>
-                                    <td>{{ \Illuminate\Support\Carbon::parse($t->tanggal_bayar)->format('j/n/y') }}</td>
+                                    <td>{{ \Illuminate\Support\Carbon::parse($t->tanggal_bayar)->format('d/m/Y') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

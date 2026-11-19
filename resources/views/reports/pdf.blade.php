@@ -42,7 +42,7 @@
             <td>{{ $t->nama_customer }}</td>
             <td>{{ $t->nama_paket }}</td>
             <td class="angka">{{ $t->jumlah_peserta }}</td>
-            <td>Transfer Bank</td>
+            <td>{{ $t->metode_pembayaran ?? 'Transfer Bank' }}</td>
             <td class="angka">{{ rupiah($t->nominal) }}</td>
             <td>{{ $t->status_pembayaran }}</td>
         </tr>

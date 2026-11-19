@@ -101,6 +101,7 @@ class DatabaseSeeder extends Seeder
             DB::table('PEMBAYARAN')->insert([
                 'id_pembayaran' => sprintf('PYM-%s-%03d', $tanggalBayar->format('Ym'), $i),
                 'nomor_invoice' => sprintf('INV/%s/%03d', $tanggalBayar->format('Y/m'), $i),
+                'metode_pembayaran' => 'QRIS',
                 'id_pemesanan' => $idPemesanan,
                 'nominal' => $total,
                 'bukti_pembayaran' => sprintf('bukti_transfer_%03d.jpg', $i),
