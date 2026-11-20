@@ -22,10 +22,10 @@ class ScreenRenderTest extends TestCase
         $routes = [
             'Guest' => ['/', '/paket', '/paket/'.$package->id_paket, '/login', '/register'],
             'Customer' => ['/customer/pesanan', '/customer/pemesanan/'.$package->id_paket.'/buat', '/customer/pesanan/'.$order->id_pemesanan, '/customer/pesanan/'.$order->id_pemesanan.'/bayar'],
-            'Staff' => ['/staff/dashboard', '/staff/laporan', '/staff/pemesanan', '/staff/pemesanan/'.$order->id_pemesanan, '/staff/pembayaran', '/staff/pembayaran/'.$payment->id_pembayaran, '/staff/penugasan', '/pelanggan', '/pelanggan/cari?keyword=Siti', '/pelanggan/'.$customer->id_pengguna],
+            'Staff' => ['/staff/dashboard', '/staff/laporan', '/staff/pemesanan', '/staff/pemesanan/'.$order->id_pemesanan, '/staff/pembayaran', '/staff/pembayaran/'.$payment->id_pembayaran, '/pelanggan', '/pelanggan/cari?keyword=Siti', '/pelanggan/'.$customer->id_pengguna],
             'Manager' => ['/manager/dashboard', '/manager/laporan', '/pelanggan', '/pelanggan/cari?keyword=Siti', '/pelanggan/'.$customer->id_pengguna],
             'Driver' => ['/driver/dashboard', '/driver/jadwal-tour', '/driver/jadwal-tour/JDW-2026-001'],
-            'Admin' => ['/admin/dashboard'],
+            'Admin' => ['/admin/dashboard', '/admin/penugasan'],
         ];
         foreach (['paket' => ['PAKET_TRAVEL', 'id_paket'], 'kendaraan' => ['KENDARAAN', 'id_kendaraan'], 'driver' => ['DRIVER', 'id_driver']] as $resource => [$table, $key]) {
             foreach (['', '/create', '/'.DB::table($table)->first()->{$key}.'/edit'] as $suffix) {

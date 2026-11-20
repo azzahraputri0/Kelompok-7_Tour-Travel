@@ -91,7 +91,8 @@ class TravelInvariantsTest extends TestCase
         $this->actingAs($this->user())->post('/customer/pemesanan/'.$p->id_paket, ['jadwal_keberangkatan' => $p->jadwal_keberangkatan, 'jumlah_peserta' => 100])->assertSessionHasErrors('jumlah_peserta');
         $this->post('/customer/pemesanan/'.$p->id_paket, ['jadwal_keberangkatan' => $p->jadwal_keberangkatan, 'jumlah_peserta' => 1, 'email' => 'x@example.test', 'no_hp' => '1', 'penumpang' => []])->assertSessionHasErrors('penumpang');
         $this->post('/admin/kendaraan', [])->assertForbidden();
-        $this->post('/staff/penugasan', [])->assertForbidden();
+        $this->post('/admin/penugasan', [])->assertForbidden();
+        $this->post('/staff/penugasan', [])->assertNotFound();
     }
 
     public function test_registration_duplicate_and_invalid_upload_rejected()
@@ -105,21 +106,22 @@ class TravelInvariantsTest extends TestCase
 
     public function test_assignment_rejects_capacity_duplicate_and_overlap()
     {
+        $this->seed(\Database\Seeders\DemoAdminSeeder::class);
         $o = $this->book();
         DB::table('PEMESANAN')->where('id_pemesanan', $o->id_pemesanan)->update(['status' => 'Terkonfirmasi', 'jumlah_peserta' => 99]);
-        $this->actingAs($this->user('Staff'));
+        $this->actingAs($this->user('Admin'));
         $d = ['id_pemesanan' => $o->id_pemesanan, 'id_driver' => 'DRV-002', 'id_kendaraan' => 'KND-003'];
-        $this->post('/staff/penugasan', $d)->assertSessionHasErrors('id_kendaraan');
+        $this->post('/admin/penugasan', $d)->assertSessionHasErrors('id_kendaraan');
         DB::table('PEMESANAN')->where('id_pemesanan', $o->id_pemesanan)->update(['jumlah_peserta' => 1]);
-        $this->post('/staff/penugasan', $d)->assertSessionHasNoErrors();
-        $this->post('/staff/penugasan', $d)->assertSessionHasErrors('id_pemesanan');
+        $this->post('/admin/penugasan', $d)->assertSessionHasNoErrors();
+        $this->post('/admin/penugasan', $d)->assertSessionHasErrors('id_pemesanan');
         $copy = (array) $o;
         $copy['id_pemesanan'] = 'OTHER';
         $copy['kode_pemesanan'] = 'OTHER';
         $copy['status'] = 'Terkonfirmasi';
         DB::table('PEMESANAN')->insert($copy);
         $d['id_pemesanan'] = 'OTHER';
-        $this->post('/staff/penugasan', $d)->assertSessionHasErrors('id_driver');
+        $this->post('/admin/penugasan', $d)->assertSessionHasErrors('id_driver');
     }
 
     public function test_admin_update_delete_and_referenced_delete_guard()

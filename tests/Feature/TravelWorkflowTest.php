@@ -36,6 +36,7 @@ class TravelWorkflowTest extends TestCase
 
     public function test_booking_payment_verification_and_assignment()
     {
+        $this->seed(\Database\Seeders\DemoAdminSeeder::class);
         Storage::fake('local');
         $u = $this->customer();
         $p = DB::table('PAKET_TRAVEL')->first();
@@ -50,8 +51,8 @@ class TravelWorkflowTest extends TestCase
         $this->actingAs(Umum::where('role', 'Staff')->first())->post('/staff/pembayaran/'.$pay->id_pembayaran.'/verifikasi')->assertSessionHasNoErrors();
         $this->assertDatabaseHas('PEMESANAN', ['id_pemesanan' => $o->id_pemesanan, 'status' => 'Terkonfirmasi']);
         $this->actingAs($u)->get('/customer/pesanan/'.$o->id_pemesanan)->assertOk()->assertSee('Terkonfirmasi')->assertSee($o->kode_pemesanan);
-        $this->actingAs(Umum::where('role', 'Staff')->first());
-        $this->post('/staff/penugasan', ['id_pemesanan' => $o->id_pemesanan, 'id_driver' => 'DRV-002', 'id_kendaraan' => 'KND-003'])->assertSessionHasNoErrors();
+        $this->actingAs(Umum::where('role', 'Admin')->first());
+        $this->post('/admin/penugasan', ['id_pemesanan' => $o->id_pemesanan, 'id_driver' => 'DRV-002', 'id_kendaraan' => 'KND-003'])->assertSessionHasNoErrors();
         $this->assertDatabaseHas('JADWAL_PERJALANAN', ['id_pemesanan' => $o->id_pemesanan, 'id_driver' => 'DRV-002']);
     }
 

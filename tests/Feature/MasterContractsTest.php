@@ -51,14 +51,15 @@ class MasterContractsTest extends TestCase
 
     public function test_assignment_rejects_unlinked_and_wrong_role_accounts_and_filters_options(): void
     {
+        $this->seed(\Database\Seeders\DemoAdminSeeder::class);
         $staff = Umum::where('role', 'Staff')->first();
         $order = DB::table('PEMESANAN')->first();
         DB::table('JADWAL_PERJALANAN')->where('id_pemesanan', $order->id_pemesanan)->delete();
         DB::table('PEMESANAN')->where('id_pemesanan', $order->id_pemesanan)->update(['status' => 'Terkonfirmasi', 'jadwal_keberangkatan' => today()->addMonths(3)->toDateString(), 'jumlah_peserta' => 1]);
         foreach ([null, $staff->id_pengguna] as $account) {
             DB::table('DRIVER')->where('id_driver', 'DRV-002')->update(['FK_id_pengguna' => $account]);
-            $this->actingAs($staff)->get('/staff/penugasan')->assertOk()->assertViewHas('daftarDriver', fn ($drivers) => !$drivers->contains('id_driver', 'DRV-002'));
-            $this->post('/staff/penugasan', ['id_pemesanan' => $order->id_pemesanan, 'id_driver' => 'DRV-002', 'id_kendaraan' => 'KND-003'])->assertSessionHasErrors('id_driver');
+            $this->actingAs(Umum::where('role', 'Admin')->first())->get('/admin/penugasan')->assertOk()->assertViewHas('daftarDriver', fn ($drivers) => !$drivers->contains('id_driver', 'DRV-002'));
+            $this->post('/admin/penugasan', ['id_pemesanan' => $order->id_pemesanan, 'id_driver' => 'DRV-002', 'id_kendaraan' => 'KND-003'])->assertSessionHasErrors('id_driver');
             $this->assertDatabaseMissing('JADWAL_PERJALANAN', ['id_pemesanan' => $order->id_pemesanan]);
         }
     }

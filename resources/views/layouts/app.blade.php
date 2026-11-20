@@ -12,6 +12,7 @@
         'Admin' => [
             ['admin.dashboard', 'Dashboard', 'dashboard', 'admin.dashboard'],
             ['admin.paket.index', 'Data Master', 'pelanggan', 'admin.paket.*,admin.driver.*,admin.kendaraan.*'],
+            ['admin.penugasan.index', 'Penugasan', 'jadwal', 'admin.penugasan.*'],
         ],
         'Customer' => [
             ['katalog.index', 'Paket Travel', 'jadwal', 'katalog.*,customer.pesanan.create,customer.pesanan.penumpang,customer.pesanan.store'],
@@ -35,7 +36,6 @@
             ['pelanggan.index', 'Pelanggan', 'pelanggan', 'pelanggan.*'],
             ['staff.pemesanan.index', 'Pemesanan', 'pemesanan', 'staff.pemesanan.*'],
             ['staff.pembayaran.index', 'Pembayaran', 'pembayaran', 'staff.pembayaran.*'],
-            ['staff.penugasan.index', 'Penugasan', 'jadwal', 'staff.penugasan.*'],
             ['staff.laporan', 'Laporan', 'laporan', 'staff.laporan*'],
         ],
     };

@@ -78,11 +78,11 @@ Route::middleware(['auth', 'role:Staff'])->prefix('staff')->name('staff.')->grou
             Route::post('/'.$resource.'/{id}/'.$action, [$controller, $action])->name($resource.'.'.$action);
         }
     }
+});
+Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/penugasan', [Penugasan_Kontrol::class, 'index'])->name('penugasan.index');
     Route::post('/penugasan', [Penugasan_Kontrol::class, 'store'])->name('penugasan.store');
     Route::delete('/penugasan/{id}', [Penugasan_Kontrol::class, 'destroy'])->name('penugasan.destroy');
-});
-Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [MasterData_Kontrol::class, 'dashboard'])->name('dashboard');
     foreach (['paket' => 'PaketTravel', 'kendaraan' => 'Kendaraan', 'driver' => 'Driver'] as $resource => $class) {
         $controller = 'App\\Http\\Controllers\\'.$class.'_Kontrol';
